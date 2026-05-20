@@ -199,7 +199,7 @@ Peak theoretical throughput:
 
 Demonstrates propagation of plaintext blocks through the fully unrolled AES pipeline.
 
-![Pipeline Waveform](waveforms/another_waveform.png)
+![Pipeline Waveform](waveforms/another waveform.png)
 
 ---
 
@@ -207,7 +207,7 @@ Demonstrates propagation of plaintext blocks through the fully unrolled AES pipe
 
 Demonstrates AXI valid/ready synchronization across write and read channels.
 
-![AXI Handshake](waveforms/handshake_signals.png)
+![AXI Handshake](waveforms/handshake signals.png)
 
 ---
 
