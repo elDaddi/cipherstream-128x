@@ -1,6 +1,6 @@
 # CipherStream-128X: AXI4-Lite AES-128 Hardware Accelerator
 
-CipherStream-128X is a fully pipelined AES-128 hardware accelerator implemented in synthesizable Verilog RTL and integrated into a SoC environment using AXI4-Lite master/slave interfaces.
+CipherStream-128X is a fully pipelined AES-128 hardware accelerator implemented in synthesizable Verilog RTL with AXI4-Lite master/slave interfaces for memory-mapped system integration.
 
 The design utilizes a fully unrolled 10-stage AES pipeline capable of retiring one 128-bit ciphertext block per clock cycle after pipeline fill.
 
