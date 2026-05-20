@@ -41,6 +41,14 @@ This enables:
 
 ---
 
+## Vivado Block Design
+
+The following block design shows the integration of the CipherStream-128X accelerator within the AXI-based SoC environment.
+
+![Block Diagram](images/bd.png)
+
+---
+
 ## Pipeline Architecture
 
 The accelerator implements a fully pipelined datapath:
@@ -129,8 +137,9 @@ The design was verified using a SystemVerilog-based top-level verification envir
 - FIPS-197 Appendix C test vectors
 - Zero-Key / Zero-Plaintext edge cases
 - Randomized pipeline stress testing
+- AXI valid/ready handshake verification
 - Reset synchronization verification
-- AXI protocol compliance verification
+- Transaction-level AXI verification using Xilinx AXI VIP
 
 ### Stress Testing
 
@@ -138,8 +147,8 @@ A 25-iteration randomized stress test was performed using dynamically generated 
 
 Results:
 - No pipeline stalls
-- No deadlocks
-- No AXI protocol violations
+- No deadlocks observed
+- Stable AXI transaction behavior
 - No in-flight key corruption
 
 ---
@@ -199,7 +208,7 @@ Peak theoretical throughput:
 
 Demonstrates propagation of plaintext blocks through the fully unrolled AES pipeline.
 
-![Pipeline Waveform](waveforms/another waveform.png)
+![Pipeline Waveform](waveforms/pipeline_waveform.png)
 
 ---
 
@@ -207,7 +216,7 @@ Demonstrates propagation of plaintext blocks through the fully unrolled AES pipe
 
 Demonstrates AXI valid/ready synchronization across write and read channels.
 
-![AXI Handshake](waveforms/handshake signals.png)
+![AXI Handshake](waveforms/handshake_signals.png)
 
 ---
 
@@ -224,7 +233,7 @@ Demonstrates AXI valid/ready synchronization across write and read channels.
 
 ```text
 ├── src/             RTL source files
-├── testbench/       Verification environment
+├── tb/       Verification environment
 ├── waveforms/       Timing and protocol waveforms
 ├── images/          Architecture diagrams
 ├── docs/            Design documentation
@@ -239,8 +248,7 @@ Demonstrates AXI valid/ready synchronization across write and read channels.
 - AXI4-Full interface integration
 - DMA-based burst transfers
 - FPGA deployment and benchmarking
-- CBC/GCM encryption modes
-- Runtime-configurable pipeline control
+- CBC encryption mode
 
 ---
 
