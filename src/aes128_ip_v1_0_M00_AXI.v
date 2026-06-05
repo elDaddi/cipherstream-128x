@@ -61,7 +61,6 @@ module aes128_ip_v1_0_M00_AXI #
     assign M_AXI_ARPROT = 3'b000;
     assign ERROR = 1'b0;
 
-    // FIX 2: Pulse TXN_DONE high for exactly 1 cycle when the final write response is accepted
     assign TXN_DONE = (state == WRITE_RESP && M_AXI_BVALID && M_AXI_BREADY && word_ct == 3);
 
     // Data Multiplexer (Ciphertext to 32-bit AXI)
