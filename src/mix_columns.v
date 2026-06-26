@@ -1,7 +1,7 @@
 `timescale 1ns / 1ps
 
 module mix_columns(
-    input  wire [127:0] data_in,
+    input wire [127:0] data_in,
     output wire [127:0] data_out
 );
 
@@ -14,7 +14,7 @@ module mix_columns(
 
 	genvar i;
 	generate
-		for(i = 0; i < 4; i = i + 1)begin: mixColumnsLoop
+		for(i=0; i<4; i=i+1) begin: mixColumnsLoop
 			// state[0,c] = 2*state[0,c] + (2 * state[1,c] + state[1,c]) + state[2,c] + state[3,c]
 			assign data_out[32*i+24+:8] =  xtime(data_in[32*i+24+:8]) ^ (xtime(data_in[32*i+16+:8]) ^ data_in[32*i+16+:8]) ^ data_in[32*i+8 +:8] ^ data_in[32*i   +:8];
 			
