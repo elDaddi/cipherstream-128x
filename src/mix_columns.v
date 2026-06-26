@@ -5,7 +5,11 @@ module mix_columns(
     output wire [127:0] data_out
 );
 
-    // Function to multiply by 2 and fix the overflow
+    // GF multiplication
+	// in this, additon is xor, and multiplication by 1 means nothing, multiply by 2 means <<1, multiply by 3 means multiply by (2+1) so x xor x<<1, but in this
+	// if msb is 1, then after shifting left by 1 you've to xor with 8'h1B
+	// so in ix columns what we do is we multiply with a matrix which is already predefined in the above manner (max val in matrix is 3)
+	
 	function [7:0] xtime;
 		input [7:0] in;
 		if(in[7] == 1) xtime = (in << 1) ^ 8'h1B;
@@ -16,16 +20,16 @@ module mix_columns(
 	generate
 		for(i=0; i<4; i=i+1) begin: mixColumnsLoop
 			// state[0,c] = 2*state[0,c] + (2 * state[1,c] + state[1,c]) + state[2,c] + state[3,c]
-			assign data_out[32*i+24+:8] =  xtime(data_in[32*i+24+:8]) ^ (xtime(data_in[32*i+16+:8]) ^ data_in[32*i+16+:8]) ^ data_in[32*i+8 +:8] ^ data_in[32*i   +:8];
+			assign data_out[32*i+24 +: 8] = xtime(data_in[32*i+24 +: 8]) ^ (xtime(data_in[32*i+16 +: 8]) ^ data_in[32*i+16 +: 8]) ^ data_in[32*i+8 +: 8] ^ data_in[32*i +: 8];
 			
 			// state[1,c] = 2*state[1,c] + (2 * state[2,c] + state[2,c]) + state[3,c] + state[0,c]
-			assign data_out[32*i+16+:8] =  xtime(data_in[32*i+16+:8]) ^ (xtime(data_in[32*i+8 +:8]) ^ data_in[32*i+8 +:8]) ^ data_in[32*i   +:8] ^ data_in[32*i+24+:8];
+			assign data_out[32*i+16 +: 8] = xtime(data_in[32*i+16 +: 8]) ^ (xtime(data_in[32*i+8 +: 8]) ^ data_in[32*i+8 +: 8]) ^ data_in[32*i +: 8] ^ data_in[32*i+24 +: 8];
 			
 			// state[2,c] = 2*state[2,c] + (2 * state[3,c] + state[3,c]) + state[0,c] + state[1,c]
-			assign data_out[32*i+8 +:8] =  xtime(data_in[32*i+8 +:8]) ^ (xtime(data_in[32*i   +:8]) ^ data_in[32*i   +:8]) ^ data_in[32*i+24+:8] ^ data_in[32*i+16+:8];
+			assign data_out[32*i+8 +: 8] = xtime(data_in[32*i+8 +:8]) ^ (xtime(data_in[32*i +:8]) ^ data_in[32*i +:8]) ^ data_in[32*i+24+:8] ^ data_in[32*i+16+:8];
 			
 			// state[3,c] = 2*state[3,c] + (2 * state[0,c] + state[0,c]) + state[1,c] + state[2,c]
-			assign data_out[32*i   +:8] =  xtime(data_in[32*i   +:8]) ^ (xtime(data_in[32*i+24+:8]) ^ data_in[32*i+24+:8]) ^ data_in[32*i+16+:8] ^ data_in[32*i+8 +:8];
+			assign data_out[32*i +:8] = xtime(data_in[32*i +: 8]) ^ (xtime(data_in[32*i+24 +: 8]) ^ data_in[32*i+24 +: 8]) ^ data_in[32*i+16 +: 8] ^ data_in[32*i+8 +: 8];
 		end
 	endgenerate
 endmodule
