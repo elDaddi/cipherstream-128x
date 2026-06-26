@@ -1,24 +1,4 @@
 `timescale 1ns / 1ps
-//////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
-// 
-// Create Date: 29.03.2026 03:11:42
-// Design Name: 
-// Module Name: key_expand
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
-// Description: 
-// 
-// Dependencies: 
-// 
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-// 
-//////////////////////////////////////////////////////////////////////////////////
-
 
 module key_expand(
     input [127:0] key_in,
@@ -34,8 +14,8 @@ module key_expand(
     assign {w0, w1, w2, w3} = key_in; //splitting
     
     sbox s0 (.data_in(w3[23:16]), .subByte(sub0));
-    sbox s1 (.data_in(w3[15:8]),  .subByte(sub1));
-    sbox s2 (.data_in(w3[7:0]),   .subByte(sub2));
+    sbox s1 (.data_in(w3[15:8]), .subByte(sub1));
+    sbox s2 (.data_in(w3[7:0]), .subByte(sub2));
     sbox s3 (.data_in(w3[31:24]), .subByte(sub3));
     assign g_w3 = {sub0 ^ RC, sub1, sub2, sub3}; //g function
 
