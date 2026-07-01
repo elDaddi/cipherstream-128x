@@ -2,11 +2,11 @@
 
 module aes128_ip_v1_0_M00_AXI #
 (
-    parameter  C_M_START_DATA_VALUE       = 32'hAA000000,
-    parameter  C_M_TARGET_SLAVE_BASE_ADDR = 32'h40000000,
-    parameter integer C_M_AXI_ADDR_WIDTH  = 32,
-    parameter integer C_M_AXI_DATA_WIDTH  = 32,
-    parameter integer C_M_TRANSACTIONS_NUM = 4
+    parameter C_M_START_DATA_VALUE       = 32'hAA000000,
+    parameter C_M_TARGET_SLAVE_BASE_ADDR = 32'h40000000,
+    parameter C_M_AXI_ADDR_WIDTH  = 32,
+    parameter C_M_AXI_DATA_WIDTH  = 32,
+    parameter C_M_TRANSACTIONS_NUM = 4
 )
 (
     // User Ports
